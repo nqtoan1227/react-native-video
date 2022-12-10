@@ -16,6 +16,12 @@ class RCTVideoPlayerViewController: AVPlayerViewController {
 
         return false
     }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        navigationController?.setNavigationBarHidden(true, animated: false)
+    }
 
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)

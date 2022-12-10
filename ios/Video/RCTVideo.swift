@@ -700,7 +700,8 @@ class RCTVideo: UIView, RCTVideoPlayerViewControllerDelegate, RCTPlayerObserverH
 
         viewController.view.frame = self.bounds
         viewController.player = player
-        return viewController
+        let nv = UINavigationController(rootViewController: viewController)
+        return nv
     }
 
     func usePlayerLayer() {
