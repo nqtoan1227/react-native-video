@@ -26,7 +26,7 @@ class RCTVideoPlayerViewController: AVPlayerViewController {
         alert.addAction(UIAlertAction(title: "OK", style: .cancel))
         self.present(alert, animated: true)
         
-//        navigationController?.setNavigationBarHidden(true, animated: false)
+        navigationController?.setNavigationBarHidden(false, animated: false)
     }
 
     override func viewDidDisappear(_ animated: Bool) {

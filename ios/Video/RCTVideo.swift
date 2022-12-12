@@ -638,14 +638,14 @@ class RCTVideo: UIView, RCTVideoPlayerViewControllerDelegate, RCTPlayerObserverH
 
                 self.onVideoFullscreenPlayerWillPresent?(["target": reactTag as Any])
 
-//                viewController.present(viewController, animated:true, completion:{
-//                    self._playerViewController?.showsPlaybackControls = true
-//                    self._fullscreenPlayerPresented = fullscreen
-//                    self._playerViewController?.autorotate = self._fullscreenAutorotate
-//
-//                    self.onVideoFullscreenPlayerDidPresent?(["target": self.reactTag])
-//
-//                })
+                viewController.present(_presentingViewController, animated:true, completion:{
+                    self._playerViewController?.showsPlaybackControls = true
+                    self._fullscreenPlayerPresented = fullscreen
+                    self._playerViewController?.autorotate = self._fullscreenAutorotate
+
+                    self.onVideoFullscreenPlayerDidPresent?(["target": self.reactTag])
+
+                })
             }
         } else if !fullscreen && _fullscreenPlayerPresented, let _playerViewController = _playerViewController {
             self.videoPlayerViewControllerWillDismiss(playerViewController: _playerViewController)
@@ -659,7 +659,7 @@ class RCTVideo: UIView, RCTVideoPlayerViewControllerDelegate, RCTPlayerObserverH
     func setFullscreenAutorotate(_ autorotate:Bool) {
         _fullscreenAutorotate = autorotate
         if _fullscreenPlayerPresented {
-//            _playerViewController?.autorotate = autorotate
+            _playerViewController?.autorotate = autorotate
         }
     }
 
@@ -667,41 +667,41 @@ class RCTVideo: UIView, RCTVideoPlayerViewControllerDelegate, RCTPlayerObserverH
     func setFullscreenOrientation(_ orientation:String?) {
         _fullscreenOrientation = orientation
         if _fullscreenPlayerPresented {
-//            _playerViewController?.preferredOrientation = orientation
+            _playerViewController?.preferredOrientation = orientation
         }
     }
 
     func usePlayerViewController() {
-//        guard let _player = _player, let _playerItem = _playerItem else { return }
-//
-//        if _playerViewController == nil {
-//            _playerViewController = createPlayerViewController(player:_player, withPlayerItem:_playerItem)
-//        }
-//        // to prevent video from being animated when resizeMode is 'cover'
-//        // resize mode must be set before subview is added
-//        setResizeMode(_resizeMode)
-//
-//        guard let _playerViewController = _playerViewController else { return }
-//
-//        if _controls {
-//            let viewController:UIViewController! = self.reactViewController()
-//            viewController?.addChild(_playerViewController)
-//            self.addSubview(_playerViewController.view)
-//        }
-//
-//        _playerObserver.playerViewController = _playerViewController
+        guard let _player = _player, let _playerItem = _playerItem else { return }
+
+        if _playerViewController == nil {
+            _playerViewController = createPlayerViewController(player:_player, withPlayerItem:_playerItem)
+        }
+        // to prevent video from being animated when resizeMode is 'cover'
+        // resize mode must be set before subview is added
+        setResizeMode(_resizeMode)
+
+        guard let _playerViewController = _playerViewController else { return }
+
+        if _controls {
+            let viewController:UIViewController! = self.reactViewController()
+            viewController?.addChild(_playerViewController)
+            self.addSubview(_playerViewController.view)
+        }
+
+        _playerObserver.playerViewController = _playerViewController
     }
 
     func createPlayerViewController(player:AVPlayer, withPlayerItem playerItem:AVPlayerItem) -> RCTVideoPlayerViewController {
-//        let viewController = RCTVideoPlayerViewController()
-//        viewController.showsPlaybackControls = true
-//        viewController.rctDelegate = self
-//        viewController.preferredOrientation = _fullscreenOrientation
-//
-//        viewController.view.frame = self.bounds
-//        viewController.player = player
-//        let nv = UINavigationController(rootViewController: viewController)
-//        return nv
+        let viewController = RCTVideoPlayerViewController()
+        viewController.showsPlaybackControls = true
+        viewController.rctDelegate = self
+        viewController.preferredOrientation = _fullscreenOrientation
+
+        viewController.view.frame = self.bounds
+        viewController.player = player
+        let nv = UINavigationController(rootViewController: viewController)
+        return nv
     }
 
     func usePlayerLayer() {
