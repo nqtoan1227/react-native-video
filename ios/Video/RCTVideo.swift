@@ -615,43 +615,45 @@ class RCTVideo: UIView, RCTVideoPlayerViewControllerDelegate, RCTPlayerObserverH
     @objc
     func setFullscreen(_ fullscreen:Bool) {
         if fullscreen && !_fullscreenPlayerPresented && _player != nil {
+            self.onVideoFullscreenPlayerWillPresent?(["target": reactTag as Any])
+            self.onVideoFullscreenPlayerDidPresent?(["target": self.reactTag])
             // Ensure player view controller is not null
-            if _playerViewController == nil {
-                self.usePlayerViewController()
-            }
+//            if _playerViewController == nil {
+//                self.usePlayerViewController()
+//            }
 
             // Set presentation style to fullscreen
-            _playerViewController?.modalPresentationStyle = .fullScreen
+//            _playerViewController?.modalPresentationStyle = .fullScreen
 
             // Find the nearest view controller
-            var viewController:UIViewController! = self.firstAvailableUIViewController()
-            if (viewController == nil) {
-                let keyWindow:UIWindow! = UIApplication.shared.keyWindow
-                viewController = keyWindow.rootViewController
-                if viewController.children.count > 0
-                {
-                    viewController = viewController.children.last
-                }
-            }
-            if viewController != nil {
-                _presentingViewController = UINavigationController(rootViewController: viewController)
+//            var viewController:UIViewController! = self.firstAvailableUIViewController()
+//            if (viewController == nil) {
+//                let keyWindow:UIWindow! = UIApplication.shared.keyWindow
+//                viewController = keyWindow.rootViewController
+//                if viewController.children.count > 0
+//                {
+//                    viewController = viewController.children.last
+//                }
+//            }
+//            if viewController != nil {
+//                _presentingViewController = UINavigationController(rootViewController: viewController)
 
-                self.onVideoFullscreenPlayerWillPresent?(["target": reactTag as Any])
-
-                viewController.present(_presentingViewController, animated:true, completion:{
-                    self._playerViewController?.showsPlaybackControls = true
-                    self._fullscreenPlayerPresented = fullscreen
-                    self._playerViewController?.autorotate = self._fullscreenAutorotate
-
-                    self.onVideoFullscreenPlayerDidPresent?(["target": self.reactTag])
-
-                })
-            }
-        } else if !fullscreen && _fullscreenPlayerPresented, let _playerViewController = _playerViewController {
+                
+//                viewController.present(_presentingViewController, animated:true, completion:{
+//                    self._playerViewController?.showsPlaybackControls = true
+//                    self._fullscreenPlayerPresented = fullscreen
+//                    self._playerViewController?.autorotate = self._fullscreenAutorotate
+//
+//
+//
+//                })
+//            }
+        } else if !fullscreen && _fullscreenPlayerPresented, {
             self.videoPlayerViewControllerWillDismiss(playerViewController: _playerViewController)
-            _presentingViewController?.dismiss(animated: true, completion:{
-                self.videoPlayerViewControllerDidDismiss(playerViewController: _playerViewController)
-            })
+            self.videoPlayerViewControllerDidDismiss(playerViewController: _playerViewController)
+//            _presentingViewController?.dismiss(animated: true, completion:{
+//
+//            })
         }
     }
 
@@ -700,8 +702,7 @@ class RCTVideo: UIView, RCTVideoPlayerViewControllerDelegate, RCTPlayerObserverH
 
         viewController.view.frame = self.bounds
         viewController.player = player
-        let nv = UINavigationController(rootViewController: viewController)
-        return nv
+        return viewController
     }
 
     func usePlayerLayer() {

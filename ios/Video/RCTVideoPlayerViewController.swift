@@ -16,18 +16,6 @@ class RCTVideoPlayerViewController: AVPlayerViewController {
 
         return false
     }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        title = "Toan"
-        
-        let alert = UIAlertController(title: "Toan", message: "", preferredStyle: .alert)
-        
-        alert.addAction(UIAlertAction(title: "OK", style: .cancel))
-        self.present(alert, animated: true)
-        
-        navigationController?.setNavigationBarHidden(false, animated: false)
-    }
 
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
