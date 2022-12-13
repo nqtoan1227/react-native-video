@@ -614,43 +614,50 @@ class RCTVideo: UIView, RCTVideoPlayerViewControllerDelegate, RCTPlayerObserverH
 
     @objc
     func setFullscreen(_ fullscreen:Bool) {
+        print("TOAN1 setFullscreen")
         if fullscreen && !_fullscreenPlayerPresented && _player != nil {
-            self.onVideoFullscreenPlayerWillPresent?(["target": reactTag as Any])
-            self.onVideoFullscreenPlayerDidPresent?(["target": self.reactTag])
+            
+            
             // Ensure player view controller is not null
-//            if _playerViewController == nil {
-//                self.usePlayerViewController()
-//            }
+            if _playerViewController == nil {
+                self.usePlayerViewController()
+            }
 
-            // Set presentation style to fullscreen
-//            _playerViewController?.modalPresentationStyle = .fullScreen
+//             Set presentation style to fullscreen
+            _playerViewController?.modalPresentationStyle = .fullScreen
 
-            // Find the nearest view controller
-//            var viewController:UIViewController! = self.firstAvailableUIViewController()
-//            if (viewController == nil) {
-//                let keyWindow:UIWindow! = UIApplication.shared.keyWindow
-//                viewController = keyWindow.rootViewController
-//                if viewController.children.count > 0
-//                {
-//                    viewController = viewController.children.last
-//                }
-//            }
-//            if viewController != nil {
+//             Find the nearest view controller
+            var viewController:UIViewController! = self.firstAvailableUIViewController()
+            if (viewController == nil) {
+                let keyWindow:UIWindow! = UIApplication.shared.keyWindow
+                viewController = keyWindow.rootViewController
+                if viewController.children.count > 0
+                {
+                    viewController = viewController.children.last
+                }
+            }
+            if viewController != nil {
+                self.onVideoFullscreenPlayerWillPresent?(["target": reactTag as Any])
+                self._playerViewController?.showsPlaybackControls = true
+                self._fullscreenPlayerPresented = fullscreen
+                self._playerViewController?.autorotate = self._fullscreenAutorotate
+                self.onVideoFullscreenPlayerDidPresent?(["target": self.reactTag])
+                
+                print("TOAN1 did call show screen")
 //                _presentingViewController = UINavigationController(rootViewController: viewController)
 
                 
 //                viewController.present(_presentingViewController, animated:true, completion:{
-//                    self._playerViewController?.showsPlaybackControls = true
-//                    self._fullscreenPlayerPresented = fullscreen
-//                    self._playerViewController?.autorotate = self._fullscreenAutorotate
+//
 //
 //
 //
 //                })
-//            }
-        } else if !fullscreen && _fullscreenPlayerPresented, {
+            }
+        } else if !fullscreen && _fullscreenPlayerPresented {
             self.videoPlayerViewControllerWillDismiss(playerViewController: _playerViewController)
             self.videoPlayerViewControllerDidDismiss(playerViewController: _playerViewController)
+            print("TOAN1 did call hide screen")
 //            _presentingViewController?.dismiss(animated: true, completion:{
 //
 //            })
